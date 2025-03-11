@@ -13,7 +13,7 @@ export const FormRow = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  @media (max-width: 814px) {
+  @media (max-width: 1100px) {
     flex-direction: column;
   }
 `;

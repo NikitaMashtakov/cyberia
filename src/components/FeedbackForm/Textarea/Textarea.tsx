@@ -5,13 +5,20 @@ import { InputContainer, StyledLabelForInput, StyledTextarea } from '../StyledCo
 type Props = {
   name: string;
   id: string;
+  value: string;
+  onChange: ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
-export const Textarea: FC<Props> = ({ name, id }) => {
+export const Textarea: FC<Props> = ({ name, id, value, onChange }) => {
   return (
     <InputContainer>
       <StyledLabelForInput htmlFor={id}>Сообщение</StyledLabelForInput>
-      <StyledTextarea name={name} id={id}></StyledTextarea>
+      <StyledTextarea
+        name={name}
+        id={id}
+        value={value}
+        onChange={onChange}
+      ></StyledTextarea>
     </InputContainer>
   );
 };

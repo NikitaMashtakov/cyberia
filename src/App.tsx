@@ -14,17 +14,24 @@ const StyledMain = styled.main`
 
 function App() {
   const [cases, setCases] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     fetch('https://api.test.cyberia.studio/api/v1/projects')
       .then((loadedData) => loadedData.json())
       .then((loadedCases) => {
         setCases(loadedCases.items);
       });
+    fetch('https://api.test.cyberia.studio/api/v1/project-categories')
+      .then((loadedData) => loadedData.json())
+      .then((loadedCategories) => {
+        setCategories(loadedCategories.items);
+      });
   }, []);
   return (
     <main>
-      <CasesContainer items={cases}></CasesContainer>
-      <FeedbackForm>Раскажитеи своем проекте</FeedbackForm>
+      <CasesContainer items={cases} categories={categories}></CasesContainer>
+      <FeedbackForm>Раскажите о своем проекте</FeedbackForm>
     </main>
   );
 }

@@ -6,13 +6,15 @@ interface Props {
   id: string;
   name: string;
   text: string;
+  value: string;
+  onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Input: FC<Props> = ({ type, id, name, text }) => {
+export const Input: FC<Props> = ({ type, id, name, text, value, onChange }) => {
   return (
     <InputContainer>
       <StyledLabelForInput>{text}</StyledLabelForInput>
-      <StyledInput type={type} name={name} id={id} />
+      <StyledInput type={type} name={name} id={id} value={value} onChange={onChange} />
     </InputContainer>
   );
 };

@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CornerBlue from '../../assets/corner_blue.svg?react';
+import { CasesFilter } from '../CasesFilter/CasesFilter';
 
 interface Item {
   id: number;
@@ -9,36 +10,42 @@ interface Item {
   image_dark: string;
   // ... другие поля
 }
-
-interface Props {
-  items: Item[];
+interface Category {
+  id: number;
+  name: string;
 }
 
-const CasesContainer: FC<Props> = ({ items }) => {
-  console.log(CornerBlue);
+type Props = {
+  items: Item[];
+  categories: Category[];
+};
+
+const CasesContainer: FC<Props> = ({ items, categories }) => {
   return (
-    <GridContainer>
-      {items.map((item) => (
-        <ImageCard key={item.id}>
-          <ImageWrapper>
-            <Image
-              src={item.image}
-              alt={item.title}
-              onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                e.currentTarget.style.display = 'none'; // скрыть сломанное изображение
-                console.log('error');
-              }}
-            />
-            <TitleOverlay>
-              {item.title}
-              <IconWrapper>
-                <CornerBlue style={{ backgroundColor: 'transparent' }} />
-              </IconWrapper>
-            </TitleOverlay>
-          </ImageWrapper>
-        </ImageCard>
-      ))}
-    </GridContainer>
+    <>
+      <CasesFilter categories={categories}></CasesFilter>
+      <GridContainer>
+        {items.map((item) => (
+          <ImageCard key={item.id}>
+            <ImageWrapper>
+              <Image
+                src={item.image}
+                alt={item.title}
+                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+              <TitleOverlay>
+                {item.title}
+                <IconWrapper>
+                  <CornerBlue style={{ backgroundColor: 'transparent' }} />
+                </IconWrapper>
+              </TitleOverlay>
+            </ImageWrapper>
+          </ImageCard>
+        ))}
+      </GridContainer>
+    </>
   );
 };
 
@@ -49,19 +56,19 @@ const GridContainer = styled.div`
   gap: 40px;
   grid-template-columns: repeat(3, 1fr); /* Точно 3 столбца */
   padding: 16px;
-  width: 100%;
+  // width: 65vw;
 
   @media (max-width: 1240px) {
-    max-width: 814px; /* 3 * 387px + 2 * 40px (gap) */
+    max-width: 814px;
 
-    grid-template-columns: repeat(2, 1fr); /* На мобильных 2 элемента */
-    gap: 40px; /* Сократили отступы */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
   }
   @media (max-width: 814px) {
-    max-width: 327px; /* 3 * 387px + 2 * 40px (gap) */
+    max-width: 387px; /* 3 * 387px + 2 * 40px (gap) */
 
-    grid-template-columns: repeat(1, 1fr); /* На мобильных 2 элемента */
-    gap: 40px; /* Сократили отступы */
+    grid-template-columns: repeat(1, 1fr);
+    gap: 40px;
   }
 `;
 
@@ -106,7 +113,7 @@ const TitleOverlay = styled.div`
 // Новый компонент для иконки
 const IconWrapper = styled.div`
   position: absolute;
-  top: -6px; /* -50% от высоты иконки (25px / 2 = 12.5px) */
+  top: -6px;
   right: -6px;
   background-color: transparent;
 `;
