@@ -7,6 +7,7 @@ export const StyledForm = styled.form`
   justify-content: center;
   margin: auto;
   width: 65vw;
+  background: transparent;
 `;
 
 export const FormRow = styled.div`
@@ -32,7 +33,7 @@ export const StyledInput = styled.input`
   font-size: 1.2rem;
   outline: none;
   &:focus {
-    border: 2px solid indigo;
+    border: 2px solid #2d76f9;
   }
 `;
 
@@ -53,7 +54,7 @@ export const StyledTextarea = styled.textarea`
   outline: none;
   resize: none;
   &:focus {
-    border: 2px solid indigo;
+    border: 2px solid #2d76f9;
   }
 `;
 

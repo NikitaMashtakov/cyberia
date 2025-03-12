@@ -1,43 +1,32 @@
 import { create } from 'zustand';
 import axios from 'axios';
-
-type Category = {
-  id: number;
-  name: string;
-};
-
-type Case = {
-  id: number;
-  title: string;
-  // slug: string;
-  project_url: string | null;
-  image: string; // URL
-  // image_dark: string; // URL
-  description: string;
-  // geo: {
-  //   lat: number | null;
-  //   lng: number | null;
-  // };
-  categories: Category[];
-};
+import { Case, Category } from '../types/types';
 
 type StoreState = {
   cases: Case[]; // Массив элементов
   categories: Category[];
-  loading: boolean; // Состояние загрузки
+  isLoading: boolean; // Состояние загрузки
   error: string | null; // Ошибка
+  activeCategory: number | null;
+};
+
+type StoreAction = {
+  setActiveCategory: (id: number | null) => void;
   fetchCases: () => Promise<void>; // Метод для загрузки данных
   fetchCategories: () => Promise<void>;
 };
 
-export const useStore = create<StoreState>((set) => ({
+export const useStore = create<StoreState & StoreAction>((set) => ({
   cases: [],
   categories: [],
-  loading: false,
+  isLoading: false,
   error: null,
+  activeCategory: null,
+
+  setActiveCategory: (id) => set({ activeCategory: id }),
 
   fetchCases: async () => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
     try {
       const response = await axios.get('https://api.test.cyberia.studio/api/v1/projects'); // Замените URL на ваш API
       set({
@@ -51,25 +40,25 @@ export const useStore = create<StoreState>((set) => ({
             categories: categories,
           }),
         ),
-        loading: false,
+        isLoading: false,
       });
     } catch (err) {
       if (err instanceof Error) {
-        set({ error: err.message || 'Failed to load items', loading: false });
+        set({ error: err.message || 'Failed to load items', isLoading: false });
       }
     }
   },
 
   fetchCategories: async () => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
     try {
       const response = await axios.get(
         'https://api.test.cyberia.studio/api/v1/project-categories',
       ); // Замените URL на ваш API
-      set({ categories: response.data.items, loading: false });
+      set({ categories: response.data.items, isLoading: false });
     } catch (err) {
       if (err instanceof Error) {
-        set({ error: err.message || 'Failed to load items', loading: false });
+        set({ error: err.message || 'Failed to load items', isLoading: false });
       }
     }
   },

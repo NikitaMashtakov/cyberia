@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import CornerBlue from '../../assets/corner_blue.svg?react';
 import { useStore } from '../../store/store';
 import { CasesFilter } from '../CasesFilter/CasesFilter';
+import { Loader } from '../Loader/Loader';
+import { Case, Category } from '../../types/types';
 
 // interface Item {
 //   id: number;
@@ -22,35 +24,47 @@ import { CasesFilter } from '../CasesFilter/CasesFilter';
 // };
 
 const CasesContainer = () => {
-  const { cases, fetchCases } = useStore();
+  const { cases, activeCategory, isLoading, fetchCases } = useStore();
   useEffect(() => {
     fetchCases();
   }, []);
 
+  const filterCategory = ({ categories }: Case) => {
+    if (activeCategory !== null) {
+      return categories.some((category) => category.id === activeCategory);
+    } else return true;
+  };
+
   return (
     <>
-      <CasesFilter />
-      <GridContainer>
-        {cases.map((item) => (
-          <ImageCard key={item.id}>
-            <ImageWrapper>
-              <Image
-                src={item.image}
-                alt={item.title}
-                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-              <TitleOverlay>
-                {item.title}
-                <IconWrapper>
-                  <CornerBlue style={{ backgroundColor: 'transparent' }} />
-                </IconWrapper>
-              </TitleOverlay>
-            </ImageWrapper>
-          </ImageCard>
-        ))}
-      </GridContainer>
+      {/* {!isLoading ? (
+        <Loader />
+      ) : ( */}
+      <>
+        <CasesFilter />
+        <GridContainer>
+          {cases.filter(filterCategory).map((item) => (
+            <ImageCard key={item.id}>
+              <ImageWrapper>
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                <TitleOverlay>
+                  {item.title}
+                  <IconWrapper>
+                    <CornerBlue style={{ backgroundColor: 'transparent' }} />
+                  </IconWrapper>
+                </TitleOverlay>
+              </ImageWrapper>
+            </ImageCard>
+          ))}
+        </GridContainer>
+      </>
+      {/* )} */}
     </>
   );
 };
@@ -61,7 +75,7 @@ const GridContainer = styled.div`
   display: grid;
   gap: 40px;
   grid-template-columns: repeat(3, 1fr);
-  padding: 16px;
+  padding: 10px;
   // width: 65vw;
 
   @media (max-width: 1240px) {
