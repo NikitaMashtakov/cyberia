@@ -1,31 +1,37 @@
 import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CornerBlue from '../../assets/corner_blue.svg?react';
+import { useStore } from '../../store/store';
 import { CasesFilter } from '../CasesFilter/CasesFilter';
 
-interface Item {
-  id: number;
-  title: string;
-  image: string;
-  image_dark: string;
-  // ... другие поля
-}
-interface Category {
-  id: number;
-  name: string;
-}
+// interface Item {
+//   id: number;
+//   title: string;
+//   image: string;
+//   image_dark: string;
+//   // ... другие поля
+// }
+// interface Category {
+//   id: number;
+//   name: string;
+// }
 
-type Props = {
-  items: Item[];
-  categories: Category[];
-};
+// type Props = {
+//   items: Item[];
+//   categories: Category[];
+// };
 
-const CasesContainer: FC<Props> = ({ items, categories }) => {
+const CasesContainer = () => {
+  const { cases, fetchCases } = useStore();
+  useEffect(() => {
+    fetchCases();
+  }, []);
+
   return (
     <>
-      <CasesFilter categories={categories}></CasesFilter>
+      <CasesFilter />
       <GridContainer>
-        {items.map((item) => (
+        {cases.map((item) => (
           <ImageCard key={item.id}>
             <ImageWrapper>
               <Image
@@ -51,10 +57,10 @@ const CasesContainer: FC<Props> = ({ items, categories }) => {
 
 const GridContainer = styled.div`
   margin: auto;
-  max-width: 1241px; /* 3 * 387px + 2 * 40px (gap) */
+  max-width: 1241px;
   display: grid;
   gap: 40px;
-  grid-template-columns: repeat(3, 1fr); /* Точно 3 столбца */
+  grid-template-columns: repeat(3, 1fr);
   padding: 16px;
   // width: 65vw;
 
@@ -65,7 +71,7 @@ const GridContainer = styled.div`
     gap: 40px;
   }
   @media (max-width: 814px) {
-    max-width: 387px; /* 3 * 387px + 2 * 40px (gap) */
+    max-width: 387px;
 
     grid-template-columns: repeat(1, 1fr);
     gap: 40px;
@@ -74,11 +80,7 @@ const GridContainer = styled.div`
 
 const ImageCard = styled.div`
   position: relative;
-  width: 100%;
-  padding-bottom: 97.67%; /* Точное соотношение 387x378 (378/387 = ~97.67%) */
-  background-color: #f0f0f0;
-  overflow: hidden;
-  border-radius: 8px;
+  padding-bottom: 97.67%;
 `;
 
 const ImageWrapper = styled.div`
@@ -90,7 +92,7 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 12px;
 `;
 
 const TitleOverlay = styled.div`
