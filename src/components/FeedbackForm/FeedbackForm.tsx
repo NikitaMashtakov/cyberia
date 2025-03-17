@@ -4,6 +4,11 @@ import { Input } from './Input/Input';
 import { Textarea } from './Textarea/Textarea';
 import { FormRow, StyledForm, SubmitButton } from './StyledComponents';
 import CheckboxInput from './CheckboxInput/CheckboxInput';
+import { Title } from '../CasesContainer/CasesContainer';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import styled from 'styled-components';
 
 type Props = {
   children: string;
@@ -15,72 +20,101 @@ type FormData = {
   phone: string;
   message: string;
 };
+const phoneRegExp =
+  /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+
+const schema = yup
+  .object({
+    name: yup.string().max(30).min(2).required(),
+    email: yup.string().email().required(),
+    phone: yup.string().matches(phoneRegExp).required(),
+    message: yup.string().max(1000).required(),
+  })
+  .required();
 
 export const FeedbackForm: FC<Props> = ({ children }) => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
+  // const [formData, setFormData] = useState<FormData>({
+  //   name: '',
+  //   email: '',
+  //   phone: '',
+  //   message: '',
+  // });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      message: '',
+    },
   });
   const [accepted, setAccepted] = useState<boolean>(false);
-  const sendFormDataToServer = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(formData);
+  const sendFormDataToServer = (data: FormData) => {
+    console.log(data);
   };
-  const handleNameChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, name: target.value });
-  };
-  const handleEmailChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
-    setFormData({ ...formData, email: target.value });
-  const handlePhoneChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
-    setFormData({ ...formData, phone: target.value });
-  const handleMessageChange = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setFormData({ ...formData, message: target.value });
+  // const handleNameChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFormData({ ...formData, name: target.value });
+  // };
+  // const handleEmailChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
+  //   setFormData({ ...formData, email: target.value });
+  // const handlePhoneChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
+  //   setFormData({ ...formData, phone: target.value });
+  // const handleMessageChange = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) =>
+  //   setFormData({ ...formData, message: target.value });
   const handleAcceptedChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
     setAccepted(target.checked);
 
-  const { name, email, phone, message } = formData;
+  // const { name, email, phone, message } = formData;
   return (
     <>
-      <StyledForm onSubmit={sendFormDataToServer}>
-        <h1>{children}</h1>
-
+      <Title>{children}</Title>
+      <StyledForm onSubmit={handleSubmit(sendFormDataToServer)}>
         <FormRow>
           <Input
-            type={'text'}
-            name={'name'}
+            // type={'text'}
+            // name={'name'}
             id={'name'}
             text={'Ваше имя'}
-            value={name}
-            onChange={handleNameChange}
+            // value={name}
+            {...register('name')}
+            // onChange={handleNameChange}
           />
-
+          <Error>{errors.name?.message}</Error>
           <Input
-            type={'email'}
-            name={'email'}
+            // type={'email'}
+            // name={'email'}
             id={'email'}
             text={'Email'}
-            value={email}
-            onChange={handleEmailChange}
+            // value={email}
+            {...register('email')}
+            // onChange={handleEmailChange}
           />
+          <Error>{errors.email?.message}</Error>
 
           <Input
-            type={'text'}
-            name={'phone'}
+            // type={'text'}
+            // name={'phone'}
             id={'phone'}
             text={'Телефон'}
-            value={phone}
-            onChange={handlePhoneChange}
+            // value={phone}
+            {...register('phone')}
+            // onChange={handlePhoneChange}
           />
+          <Error>{errors.phone?.message}</Error>
         </FormRow>
         <FormRow>
           <Textarea
-            name={'message'}
+            // name={'message'}
             id={'message'}
-            onChange={handleMessageChange}
-            value={message}
+            {...register('message')}
+            // onChange={handleMessageChange}
+            // value={message}
           />
+          <Error>{errors.message?.message}</Error>
         </FormRow>
         <CheckboxInput
           text={'Согласие на обработку персональных данных'}
@@ -92,3 +126,12 @@ export const FeedbackForm: FC<Props> = ({ children }) => {
     </>
   );
 };
+
+const Error = styled.p`
+  color: #bf1650;
+
+  p &::before {
+    display: inline;
+    content: '⚠ ';
+  }
+`;

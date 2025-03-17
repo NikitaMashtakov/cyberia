@@ -5,7 +5,6 @@ import { Case, Category } from '../types/types';
 type StoreState = {
   cases: Case[]; // Массив элементов
   categories: Category[];
-  isLoading: boolean; // Состояние загрузки
   error: string | null; // Ошибка
   activeCategory: number | null;
 };
@@ -19,14 +18,13 @@ type StoreAction = {
 export const useStore = create<StoreState & StoreAction>((set) => ({
   cases: [],
   categories: [],
-  isLoading: false,
   error: null,
   activeCategory: null,
 
   setActiveCategory: (id) => set({ activeCategory: id }),
 
   fetchCases: async () => {
-    set({ isLoading: true, error: null });
+    set({ error: null });
     try {
       const response = await axios.get('https://api.test.cyberia.studio/api/v1/projects'); // Замените URL на ваш API
       set({
@@ -40,25 +38,24 @@ export const useStore = create<StoreState & StoreAction>((set) => ({
             categories: categories,
           }),
         ),
-        isLoading: false,
       });
     } catch (err) {
       if (err instanceof Error) {
-        set({ error: err.message || 'Failed to load items', isLoading: false });
+        set({ error: err.message || 'Failed to load items' });
       }
     }
   },
 
   fetchCategories: async () => {
-    set({ isLoading: true, error: null });
+    set({ error: null });
     try {
       const response = await axios.get(
         'https://api.test.cyberia.studio/api/v1/project-categories',
       ); // Замените URL на ваш API
-      set({ categories: response.data.items, isLoading: false });
+      set({ categories: response.data.items });
     } catch (err) {
       if (err instanceof Error) {
-        set({ error: err.message || 'Failed to load items', isLoading: false });
+        set({ error: err.message || 'Failed to load items' });
       }
     }
   },

@@ -30,10 +30,10 @@ export const StyledInput = styled.input`
   border-radius: 11px;
   width: 100%;
   border: 1.5px solid #9aa8ba;
-  font-size: 1.2rem;
+  font-size: 1rem;
   outline: none;
   &:focus {
-    border: 2px solid #2d76f9;
+    border: 1.5px solid #2d76f9;
   }
 `;
 
@@ -54,7 +54,7 @@ export const StyledTextarea = styled.textarea`
   outline: none;
   resize: none;
   &:focus {
-    border: 2px solid #2d76f9;
+    border: 1.5px solid #2d76f9;
   }
 `;
 

@@ -2,13 +2,11 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import Logo from './../../assets/logo.svg?react';
 
-// Логотип (можно заменить на ваш SVG или изображение)
 const StyledLogo = styled(Logo)`
   width: 100px;
   height: auto;
 `;
 
-// Стили для Header
 const HeaderContainer = styled.header`
   width: 65vw;
   display: flex;
@@ -23,8 +21,7 @@ const HeaderContainer = styled.header`
   }
 `;
 
-// Стили для меню
-const Menu = styled.nav`
+const MenuContainer = styled.nav`
   display: flex;
   gap: 40px;
 
@@ -34,7 +31,6 @@ const Menu = styled.nav`
   }
 `;
 
-// Стили для ссылок в меню
 const MenuItem = styled.a`
   font-size: 16px;
   color: white;
@@ -50,17 +46,14 @@ const MenuItem = styled.a`
 const Header: FC = () => {
   return (
     <HeaderContainer>
-      {/* Логотип */}
       <StyledLogo />
-
-      {/* Меню навигации */}
-      <Menu>
+      <MenuContainer>
         <MenuItem href="#agency">Агентство</MenuItem>
         <MenuItem href="#services">Услуги</MenuItem>
         <MenuItem href="#cases">Кейсы</MenuItem>
         <MenuItem href="#blog">Блог</MenuItem>
         <MenuItem href="#contacts">Контакты</MenuItem>
-      </Menu>
+      </MenuContainer>
     </HeaderContainer>
   );
 };

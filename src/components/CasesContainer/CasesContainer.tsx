@@ -6,27 +6,14 @@ import { CasesFilter } from '../CasesFilter/CasesFilter';
 import { Loader } from '../Loader/Loader';
 import { Case, Category } from '../../types/types';
 
-// interface Item {
-//   id: number;
-//   title: string;
-//   image: string;
-//   image_dark: string;
-//   // ... другие поля
-// }
-// interface Category {
-//   id: number;
-//   name: string;
-// }
-
-// type Props = {
-//   items: Item[];
-//   categories: Category[];
-// };
-
 const CasesContainer = () => {
-  const { cases, activeCategory, isLoading, fetchCases } = useStore();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { cases, activeCategory, fetchCases, fetchCategories } = useStore();
   useEffect(() => {
-    fetchCases();
+    setIsLoading(true);
+    Promise.all([fetchCategories(), fetchCases()])
+      .then(() => setIsLoading(false))
+      .catch((err) => console.log(err));
   }, []);
 
   const filterCategory = ({ categories }: Case) => {
@@ -34,37 +21,38 @@ const CasesContainer = () => {
       return categories.some((category) => category.id === activeCategory);
     } else return true;
   };
-
+  console.log(isLoading);
   return (
     <>
-      {/* {!isLoading ? (
+      <Title>Кейсы</Title>
+      {isLoading ? (
         <Loader />
-      ) : ( */}
-      <>
-        <CasesFilter />
-        <GridContainer>
-          {cases.filter(filterCategory).map((item) => (
-            <ImageCard key={item.id}>
-              <ImageWrapper>
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-                <TitleOverlay>
-                  {item.title}
-                  <IconWrapper>
-                    <CornerBlue style={{ backgroundColor: 'transparent' }} />
-                  </IconWrapper>
-                </TitleOverlay>
-              </ImageWrapper>
-            </ImageCard>
-          ))}
-        </GridContainer>
-      </>
-      {/* )} */}
+      ) : (
+        <>
+          <CasesFilter />
+          <GridContainer>
+            {cases.filter(filterCategory).map((item) => (
+              <ImageCard key={item.id}>
+                <ImageWrapper>
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  <TitleOverlay>
+                    {item.title}
+                    <IconWrapper>
+                      <CornerBlue style={{ backgroundColor: 'transparent' }} />
+                    </IconWrapper>
+                  </TitleOverlay>
+                </ImageWrapper>
+              </ImageCard>
+            ))}
+          </GridContainer>
+        </>
+      )}
     </>
   );
 };
@@ -117,7 +105,7 @@ const TitleOverlay = styled.div`
   background: #313341;
   color: white;
   border-radius: 4px;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
   width: 122px;
   height: 122px;
@@ -126,12 +114,20 @@ const TitleOverlay = styled.div`
   justify-content: center;
 `;
 
-// Новый компонент для иконки
 const IconWrapper = styled.div`
   position: absolute;
   top: -6px;
   right: -6px;
   background-color: transparent;
+`;
+
+export const Title = styled.h1`
+  display: flex;
+  color: white;
+  font-weight: 600;
+  font-size: 34px;
+  padding: 10px;
+  margin-bottom: 40px;
 `;
 
 export default CasesContainer;

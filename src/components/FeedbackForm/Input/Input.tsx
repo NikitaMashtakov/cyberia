@@ -2,19 +2,19 @@ import { FC } from 'react';
 import { InputContainer, StyledInput, StyledLabelForInput } from '../StyledComponents';
 
 interface Props {
-  type: string;
+  // type: string;
   id: string;
   name: string;
   text: string;
-  value: string;
-  onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void;
+  // value: string;
+  // onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Input: FC<Props> = ({ type, id, name, text, value, onChange }) => {
+export const Input: FC<Props> = ({ id, name, text }) => {
   return (
     <InputContainer>
       <StyledLabelForInput>{text}</StyledLabelForInput>
-      <StyledInput type={type} name={name} id={id} value={value} onChange={onChange} />
+      <StyledInput name={name} id={id} />
     </InputContainer>
   );
 };
