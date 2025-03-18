@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { InputContainer, StyledInput, StyledLabelForInput } from '../StyledComponents';
 
 interface Props {
-  // type: string;
+  type: string;
   id: string;
   name: string;
   text: string;
-  // value: string;
-  // onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input: FC<Props> = ({ id, name, text }) => {

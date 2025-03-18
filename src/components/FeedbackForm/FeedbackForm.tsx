@@ -5,7 +5,7 @@ import { Textarea } from './Textarea/Textarea';
 import { FormRow, StyledForm, SubmitButton } from './StyledComponents';
 import CheckboxInput from './CheckboxInput/CheckboxInput';
 import { Title } from '../CasesContainer/CasesContainer';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styled from 'styled-components';
@@ -24,7 +24,8 @@ const phoneRegExp =
   /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
 const schema = yup
-  .object({
+  .object()
+  .shape({
     name: yup.string().max(30).min(2).required(),
     email: yup.string().email().required(),
     phone: yup.string().matches(phoneRegExp).required(),
@@ -40,6 +41,7 @@ export const FeedbackForm: FC<Props> = ({ children }) => {
   //   message: '',
   // });
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -74,22 +76,28 @@ export const FeedbackForm: FC<Props> = ({ children }) => {
       <Title>{children}</Title>
       <StyledForm onSubmit={handleSubmit(sendFormDataToServer)}>
         <FormRow>
-          <Input
-            // type={'text'}
-            // name={'name'}
-            id={'name'}
-            text={'Ваше имя'}
-            // value={name}
-            {...register('name')}
-            // onChange={handleNameChange}
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type={'text'}
+                // name={'name'}
+                id={'name'}
+                text={'Ваше имя'}
+                {...field}
+                {...register('name')}
+                // onChange={handleNameChange}
+              />
+            )}
           />
           <Error>{errors.name?.message}</Error>
           <Input
-            // type={'email'}
+            type={'email'}
             // name={'email'}
             id={'email'}
             text={'Email'}
-            // value={email}
+            value={email}
             {...register('email')}
             // onChange={handleEmailChange}
           />
