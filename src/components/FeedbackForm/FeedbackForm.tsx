@@ -34,12 +34,6 @@ const schema = yup
   .required();
 
 export const FeedbackForm: FC<Props> = ({ children }) => {
-  // const [formData, setFormData] = useState<FormData>({
-  //   name: '',
-  //   email: '',
-  //   phone: '',
-  //   message: '',
-  // });
   const {
     control,
     register,
@@ -58,69 +52,53 @@ export const FeedbackForm: FC<Props> = ({ children }) => {
   const sendFormDataToServer = (data: FormData) => {
     console.log(data);
   };
-  // const handleNameChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFormData({ ...formData, name: target.value });
-  // };
-  // const handleEmailChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
-  //   setFormData({ ...formData, email: target.value });
-  // const handlePhoneChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
-  //   setFormData({ ...formData, phone: target.value });
-  // const handleMessageChange = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) =>
-  //   setFormData({ ...formData, message: target.value });
   const handleAcceptedChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
     setAccepted(target.checked);
 
-  // const { name, email, phone, message } = formData;
   return (
     <>
       <Title>{children}</Title>
       <StyledForm onSubmit={handleSubmit(sendFormDataToServer)}>
         <FormRow>
           <Controller
-            name="name"
+            name={'name'}
             control={control}
             render={({ field }) => (
-              <Input
-                type={'text'}
-                // name={'name'}
-                id={'name'}
-                text={'Ваше имя'}
-                {...field}
-                {...register('name')}
-                // onChange={handleNameChange}
-              />
+              <Input type={'text'} id={'name'} text={'Ваше имя'} {...field} />
             )}
           />
           <Error>{errors.name?.message}</Error>
-          <Input
-            type={'email'}
-            // name={'email'}
-            id={'email'}
-            text={'Email'}
-            value={email}
-            {...register('email')}
-            // onChange={handleEmailChange}
+          <Controller
+            name={'email'}
+            control={control}
+            render={({ field }) => (
+              <Input type={'email'} id={'email'} text={'Email'} {...field} />
+            )}
           />
           <Error>{errors.email?.message}</Error>
-
-          <Input
-            // type={'text'}
-            // name={'phone'}
-            id={'phone'}
-            text={'Телефон'}
-            // value={phone}
-            {...register('phone')}
-            // onChange={handlePhoneChange}
+          <Controller
+            control={control}
+            name={'phone'}
+            render={({ field }) => (
+              <Input type={'phone'} id={'phone'} text={'Телефон'} {...field} />
+            )}
           />
           <Error>{errors.phone?.message}</Error>
         </FormRow>
         <FormRow>
-          <Textarea
-            // name={'message'}
-            id={'message'}
-            {...register('message')}
-            // onChange={handleMessageChange}
-            // value={message}
+          <Controller
+            control={control}
+            name={'message'}
+            render={({ field }) => (
+              <Textarea
+                id={'message'}
+                text={'Сообщение'}
+                {...field}
+                // name={'message'}
+                // onChange={handleMessageChange}
+                // value={message}
+              />
+            )}
           />
           <Error>{errors.message?.message}</Error>
         </FormRow>

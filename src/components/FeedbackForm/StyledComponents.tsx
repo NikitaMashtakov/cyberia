@@ -26,6 +26,7 @@ export const InputContainer = styled.div`
 `;
 
 export const StyledInput = styled.input`
+  color: white;
   padding: 10px;
   border-radius: 11px;
   width: 100%;
@@ -46,6 +47,7 @@ export const StyledLabelForInput = styled.label`
 `;
 
 export const StyledTextarea = styled.textarea`
+  color: white;
   padding: 10px;
   border-radius: 11px;
   width: 100%;

@@ -21,7 +21,7 @@ const CasesContainer = () => {
       return categories.some((category) => category.id === activeCategory);
     } else return true;
   };
-  console.log(isLoading);
+
   return (
     <>
       <Title>Кейсы</Title>
