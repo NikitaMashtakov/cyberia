@@ -27,7 +27,7 @@ export const InputContainer = styled.div`
 
 export const StyledInput = styled.input`
   color: white;
-  padding: 10px;
+  padding: 10px 25px;
   border-radius: 11px;
   width: 100%;
   border: 1.5px solid #9aa8ba;
@@ -37,7 +37,26 @@ export const StyledInput = styled.input`
     border: 1.5px solid #2d76f9;
   }
 `;
+export const Placeholder = styled.span`
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: white;
+  pointer-events: none;
+  transition: all 0.3s;
+  z-index: 0;
 
+  ${StyledInput}:focus + &,
+  ${StyledInput}:not(:placeholder-shown) + & {
+    top: -10px;
+    left: 12px;
+    font-size: 12px;
+    color: white;
+    background-color: #fff;
+    padding: 0 4px;
+    border-radius: 4px;
+  }
+`;
 export const StyledLabelForInput = styled.label`
   position: absolute;
   top: -10px;
@@ -83,4 +102,12 @@ export const SubmitButton = styled.button`
   font-size: 18px;
   font-weight: 400;
   font-family: 'Fira Sans Condensed';
+`;
+
+export const Error = styled.p`
+  color: #bf1650;
+  p &::before {
+    display: inline;
+    content: '⚠ ';
+  }
 `;

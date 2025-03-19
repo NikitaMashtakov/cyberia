@@ -3,19 +3,23 @@ import {
   CheckboxContainer,
   StyledCheckboxInput,
   StyledLabelForCheckbox,
+  Error,
+  FormRow,
 } from '../StyledComponents';
 
 type Props = {
   text: string;
-  checked: boolean;
   onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 };
-const CheckboxInput: FC<Props> = ({ text, checked, onChange }) => {
+const CheckboxInput: FC<Props> = ({ text, onChange, error }) => {
   return (
-    <CheckboxContainer>
-      <StyledCheckboxInput checked={checked} onChange={onChange} />
-      <StyledLabelForCheckbox>{text}</StyledLabelForCheckbox>
-    </CheckboxContainer>
+    <>
+      <CheckboxContainer>
+        <StyledCheckboxInput onChange={onChange} />
+        <StyledLabelForCheckbox>{text}</StyledLabelForCheckbox>
+      </CheckboxContainer>
+    </>
   );
 };
 
