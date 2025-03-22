@@ -14,9 +14,7 @@ const rotate = keyframes`
 
 `;
 const StyledLoader = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
+  margin: auto;
   transform: translate(-50%, -50%);
   width: 25px;
   height: 25px;

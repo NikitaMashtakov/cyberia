@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-
 import './App.module.css';
-import { FeedbackForm } from './components/FeedbackForm/FeedbackForm';
-import CasesContainer from './components/CasesContainer/CasesContainer';
 import styled from 'styled-components';
-import { useStore } from './store/store';
-import { Loader } from './components/Loader/Loader';
-import Header from './components/Header/Header';
+import { Route, Routes } from 'react-router';
+import { Layout } from './pages/Layout/Layout';
+import { NotFound } from './pages/NotFound/NotFound';
+import { Home } from './pages/Home/Home';
+import { Cases } from './pages/Cases/Cases';
 
 const StyledMain = styled.main`
   // display: flex;
@@ -18,21 +17,17 @@ const StyledMain = styled.main`
 `;
 
 function App() {
-  const { isLoading } = useStore();
+  // const { isLoading } = useStore();
 
   return (
-    <StyledMain>
-      {/* {isLoading ? (
-        <Loader />
-      ) : (
-
-      )} */}
-      <>
-        <Header />
-        <CasesContainer />
-        <FeedbackForm>Расскажите о вашем проекте:</FeedbackForm>
-      </>
-    </StyledMain>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="cases" element={<Cases />}></Route>
+        {/* <Route path="contact" element={<Contact />} /> */}
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }
 

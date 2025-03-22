@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import Logo from './../../assets/logo.svg?react';
+import { NavLink } from 'react-router';
 
 const StyledLogo = styled(Logo)`
   width: 100px;
@@ -31,7 +32,7 @@ const MenuContainer = styled.nav`
   }
 `;
 
-const MenuItem = styled.a`
+const MenuItem = styled(NavLink)`
   font-size: 16px;
   color: white;
   text-decoration: none;
@@ -46,13 +47,15 @@ const MenuItem = styled.a`
 const Header: FC = () => {
   return (
     <HeaderContainer>
-      <StyledLogo />
+      <MenuItem to="/">
+        <StyledLogo />
+      </MenuItem>
       <MenuContainer>
-        <MenuItem href="#agency">Агентство</MenuItem>
-        <MenuItem href="#services">Услуги</MenuItem>
-        <MenuItem href="#cases">Кейсы</MenuItem>
-        <MenuItem href="#blog">Блог</MenuItem>
-        <MenuItem href="#contacts">Контакты</MenuItem>
+        <MenuItem to="/agency">Агентство</MenuItem>
+        <MenuItem to="/services">Услуги</MenuItem>
+        <MenuItem to="/cases">Кейсы</MenuItem>
+        <MenuItem to="/blog">Блог</MenuItem>
+        <MenuItem to="/contacts">Контакты</MenuItem>
       </MenuContainer>
     </HeaderContainer>
   );
