@@ -6,6 +6,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #24252f;
   font-family: 'Fira Sans Condensed';
+}
+body {
+  background: linear-gradient(#24252f 0%, #31313f 36%, #242530 100%);
 }

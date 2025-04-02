@@ -8,6 +8,7 @@ export const StyledForm = styled.form`
   margin: auto;
   width: 65vw;
   background: transparent;
+  margin-bottom: 100px;
 `;
 
 export const FormRow = styled.div`
@@ -20,12 +21,14 @@ export const FormRow = styled.div`
 `;
 
 export const InputContainer = styled.div`
+  background: transparent;
   position: relative;
   margin: 10px 10px;
   width: 100%;
 `;
 
 export const StyledInput = styled.input`
+  background: transparent;
   color: white;
   padding: 10px 25px;
   border-radius: 11px;
@@ -58,14 +61,17 @@ export const Placeholder = styled.span`
   }
 `;
 export const StyledLabelForInput = styled.label`
+  background: inherit;
   position: absolute;
   top: -10px;
   left: 10px;
   padding: 0 5px;
   color: #ffefef;
+  z-index: 1000;
 `;
 
 export const StyledTextarea = styled.textarea`
+  background: transparent;
   color: white;
   padding: 10px;
   border-radius: 11px;

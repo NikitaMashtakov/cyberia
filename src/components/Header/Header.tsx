@@ -14,7 +14,7 @@ const HeaderContainer = styled.header`
   justify-content: start;
   align-items: center;
   padding: 20px 10px;
-  color: white; // Цвет текста
+  color: white;
   gap: 100px;
   @media (max-width: 768px) {
     flex-direction: column;
@@ -43,7 +43,6 @@ const MenuItem = styled(NavLink)`
   }
 `;
 
-// Компонент Header
 const Header: FC = () => {
   return (
     <HeaderContainer>

@@ -64,7 +64,7 @@ const GridContainer = styled.div`
   gap: 40px;
   grid-template-columns: repeat(3, 1fr);
   padding: 10px;
-  // width: 65vw;
+  width: 65vw;
 
   @media (max-width: 1240px) {
     max-width: 814px;
@@ -105,7 +105,7 @@ const TitleOverlay = styled.div`
   background: #313341;
   color: white;
   border-radius: 4px;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 600;
   width: 122px;
   height: 122px;
@@ -125,7 +125,7 @@ export const Title = styled.h1`
   display: flex;
   color: white;
   font-weight: 600;
-  font-size: 34px;
+  font-size: 48px;
   padding: 10px;
   margin-bottom: 40px;
 `;

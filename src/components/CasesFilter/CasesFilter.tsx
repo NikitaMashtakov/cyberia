@@ -2,11 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useStore } from '../../store/store';
 import { FilterButton } from './FilterButton';
+import { Category } from '../../types/types';
 
-type Category = {
-  id: number;
-  name: string;
-};
 type Props = {
   categories: Category[];
 };
@@ -39,8 +36,14 @@ export const CasesFilter: FC = () => {
 
 const FilterContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   align-items: center;
   padding: 10px;
+  gap: 30px;
+  width: 65vw;
+  margin: auto;
+  // @media (max-width: 1240px) {
+  //   flex-direction: column;
+  // }
 `;

@@ -78,8 +78,8 @@ export const FeedbackForm: FC<Props> = ({ children }) => {
 
   return (
     <>
-      <Title>{children}</Title>
       <StyledForm onSubmit={handleSubmit(sendFormDataToServer)}>
+        <Title>{children}</Title>
         <FormRow>
           <Controller
             name={'name'}
